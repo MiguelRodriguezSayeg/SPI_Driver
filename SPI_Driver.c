@@ -42,26 +42,21 @@ void Init_SPI_Slave(){
 		SPI0->C1|= SPI_C1_SPE(1); //Activar el SPI0
 }
 
-uint_8 SPI_Write(uint_8* instructions,uint_8 size){
-	uint_8 i;
-
-	for(i=0;i<size;++i){
-		if((((SPI0->S)& (SPI_S_SPTEF_MASK))==SPI_S_SPTEF_MASK )){
-		SPI0->DL=instructions[i];
+uint_8 SPI_Write(uint_8 instructions,uint_8 size){
+		while((((SPI0->S)& (SPI_S_SPTEF_MASK))!=SPI_S_SPTEF_MASK ));
+		SPI0->DL=instructions;
 		return SUCCESS;
-		}
-	}
-	return ERROR;
 }
 
 uint_8 SPI_Read(uint_8* instructions,uint_8 size){
 	uint_8 i;
 	for(i=0;i<size;++i){
-		SPI0->DL=0;
-		if((((SPI0->S)& (SPI_S_SPTEF_MASK))==SPI_S_SPTEF_MASK )){
-		instructions[i]=SPI0->DL;
-		return SUCCESS;
+		//SPI0->DL=0;
+		if((((SPI0->S)& (SPI_S_SPTEF_MASK))==SPI_S_SPTEF_MASK ))
+		{
+			instructions[i]=SPI0->DL;
+			return SUCCESS;
 		}
+		return ERROR;
 	}
-	return ERROR;
 }

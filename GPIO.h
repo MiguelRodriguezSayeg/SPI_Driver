@@ -5,10 +5,13 @@
 #define SUCCESS 1
 #define ERROR 0
 
-#define ROJO 1
-#define VERDE 2
-#define AMARILLO 4
-#define BLANCO 8
+
+#define VERDE 			0b00000001
+#define BLANCO			0b00000010
+#define ROJO 			0b00000100
+#define AMARILLO		0b00001000
+#define PLACA 			0b00010010
+
 typedef unsigned char uint_8;
 
 enum puertos{
