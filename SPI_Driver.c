@@ -49,14 +49,14 @@ uint_8 SPI_Write(uint_8 instructions,uint_8 size){
 }
 
 uint_8 SPI_Read(uint_8* instructions,uint_8 size){
+	uint_8 state = ERROR;
 	uint_8 i;
-	for(i=0;i<size;++i){
+	for(i=0;i<size;++i)
+	{
 		//SPI0->DL=0;
-		if((((SPI0->S)& (SPI_S_SPTEF_MASK))==SPI_S_SPTEF_MASK ))
-		{
-			instructions[i]=SPI0->DL;
-			return SUCCESS;
-		}
-		return ERROR;
+		while((((SPI0->S)& (SPI_S_SPTEF_MASK))!=SPI_S_SPTEF_MASK ));
+		*instructions=SPI0->DL;
+		state = SUCCESS;
 	}
+	return state;
 }

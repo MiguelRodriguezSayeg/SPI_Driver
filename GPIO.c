@@ -7,15 +7,23 @@ uint_8 EnableLed(uint_8 color)
 	{
 		case ROJO:
 			PORTD->PCR[puertoRojo] |= PORT_PCR_MUX(1);		//INICIALIZAR EL GPIO
+			PORTD->PCR[puertoRojo] |= PORT_PCR_PE(0b1);
+			PORTD->PCR[puertoRojo] |= PORT_PCR_PS(0b1);
 			break;
 		case VERDE:
 			PORTD->PCR[puertoVerde] |= PORT_PCR_MUX(1);		//INICIALIZAR EL GPIO
+			PORTD->PCR[puertoVerde] |= PORT_PCR_PE(0b1);
+			PORTD->PCR[puertoVerde] |= PORT_PCR_PS(0b1);
 			break;
 		case AMARILLO:
 			PORTD->PCR[puertoAmarillo] |= PORT_PCR_MUX(1);		//INICIALIZAR EL GPIO
+			PORTD->PCR[puertoAmarillo] |= PORT_PCR_PE(0b1);
+			PORTD->PCR[puertoAmarillo] |= PORT_PCR_PS(0b1);
 			break;
 		case BLANCO:
 			PORTD->PCR[puertoBlanco] |= PORT_PCR_MUX(1);		//INICIALIZAR EL GPIO
+			PORTD->PCR[puertoBlanco] |= PORT_PCR_PE(0b1);
+			PORTD->PCR[puertoBlanco] |= PORT_PCR_PS(0b1);
 			break;
 		case PLACA:
 			SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;			//INICIALIZAR EL PUERTO
@@ -23,12 +31,14 @@ uint_8 EnableLed(uint_8 color)
 			break;
 		default:
 			return ERROR;
-
 	}
+	TurnOffLed(color);
 	return SUCCESS;
 }
 uint_8 DisableLed(uint_8 color)
 {
+
+	TurnOffLed(color);
 	switch(color)
 	{
 		case ROJO:
@@ -53,7 +63,7 @@ uint_8 DisableLed(uint_8 color)
 	return SUCCESS;
 }
 
-uint_8 TurnOnLed(uint_8 color)
+uint_8 TurnOffLed(uint_8 color)
 {
 	switch(color)
 	{
@@ -77,7 +87,7 @@ uint_8 TurnOnLed(uint_8 color)
 	}
 	return SUCCESS;
 }
-uint_8 TurnOffLed(uint_8 color)
+uint_8 TurnOnLed(uint_8 color)
 {
 
 	switch(color)
